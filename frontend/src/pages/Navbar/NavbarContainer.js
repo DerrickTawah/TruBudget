@@ -14,13 +14,14 @@ import {
   storeSearchBarDisplayed,
   setIsRoot
 } from "./actions";
+import { storeSubSearchTerm, storeSubSearchBarDisplayed } from "../SubProjects/actions";
 import { logout } from "../Login/actions";
 
 import FlyInNotifications from "../Notifications/FlyInNotifications";
 
 import Navbar from "./Navbar";
 import { toJS } from "../../helper";
-import { convertToSearchBarString } from "./convertSearchTerm";
+import { convertToSearchBarString } from "../../helper";
 
 class NavbarContainer extends Component {
   componentDidMount() {
@@ -62,7 +63,9 @@ const mapDispatchToProps = {
   exportData,
   storeSearchTerm,
   storeSearchBarDisplayed,
-  setIsRoot
+  setIsRoot,
+  storeSubSearchBarDisplayed,
+  storeSubSearchTerm
 };
 
 const mapStateToProps = state => {

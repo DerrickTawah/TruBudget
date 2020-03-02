@@ -2,7 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Chip from "@material-ui/core/Chip";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,14 +14,16 @@ import PermissionIcon from "@material-ui/icons/LockOpen";
 import MoreIcon from "@material-ui/icons/MoreHoriz";
 import LaunchIcon from "@material-ui/icons/ZoomIn";
 import _isEmpty from "lodash/isEmpty";
+import Highlight from "react-highlighter";
 import React from "react";
 
 import { statusMapping, toAmountString } from "../../helper";
 import strings from "../../localizeStrings";
 import { canUpdateSubProject, canViewSubProjectDetails, canViewSubProjectPermissions } from "../../permissions";
 import ActionButton from "../Common/ActionButton";
+import SubProjectSearch from "./SubProjectSearch";
 
-const styles = {
+const styles = theme => ({
   subprojectTable: {
     tableLayout: "fixed"
   },
@@ -60,7 +62,7 @@ const styles = {
   budget: {
     margin: "4px"
   }
-};
+});
 
 const displaySubprojectBudget = budgets => {
   const consolidatedBudgets = budgets.reduce((acc, next) => {
@@ -101,15 +103,19 @@ const displaySubprojectBudget = budgets => {
   return <div style={styles.budgetContainer}>{display}</div>;
 };
 
-const getTableEntries = (
+const getTableEntries = ({
   classes,
   subProjects,
   location,
   history,
   showEditDialog,
   showSubProjectPermissions,
-  showSubProjectAdditionalData
-) => {
+  showSubProjectAdditionalData,
+  highlightingRegex,
+  theme,
+  storeSubSearchTerm,
+  storeSubSearchBarDisplayed
+}) => {
   return subProjects.map(({ data, allowedIntents }, index) => {
     const { currency, status, description, displayName, id, projectedBudgets, additionalData } = data;
     const isOpen = status !== "closed";
@@ -123,10 +129,20 @@ const getTableEntries = (
       return (
         <TableRow key={index}>
           <TableCell className={classes.displayName} data-test={`subproject-title-${index}`}>
-            {displayName}
+            <Highlight
+              data-test="highlighted-displayname"
+              matchStyle={{ backgroundColor: theme.palette.primary.light }}
+              search={highlightingRegex}
+            >
+              {displayName}
+            </Highlight>
           </TableCell>
           <TableCell className={classes.projectdBudget}>{amountString}</TableCell>
-          <TableCell className={classes.status}>{statusMapping(status)}</TableCell>
+          <TableCell className={classes.status}>
+            <Highlight matchStyle={{ backgroundColor: theme.palette.primary.light }} search={highlightingRegex}>
+              {statusMapping(status)}
+            </Highlight>
+          </TableCell>
           <TableCell className={classes.actions}>
             <div className={classes.buttonContainer}>
               <div className={classes.button}>
@@ -161,7 +177,11 @@ const getTableEntries = (
               <div className={classes.button}>
                 <ActionButton
                   notVisible={!canViewSubProjectDetails(allowedIntents)}
-                  onClick={() => history.push("/projects/" + location.pathname.split("/")[2] + "/" + id)}
+                  onClick={() => {
+                    storeSubSearchTerm("");
+                    storeSubSearchBarDisplayed(false);
+                    history.push("/projects/" + location.pathname.split("/")[2] + "/" + id);
+                  }}
                   title={strings.common.view}
                   icon={<LaunchIcon />}
                   data-test={`subproject-view-details-${index}`}
@@ -184,9 +204,16 @@ const SubProjectTable = ({
   showEditDialog,
   showSubProjectPermissions,
   showSubProjectAdditionalData,
-  isSubProjectAdditionalDataShown
+  isSubProjectAdditionalDataShown,
+  searchBarDisplayed,
+  searchTerm,
+  searchDisabled,
+  storeSubSearchBarDisplayed,
+  storeSubSearchTerm,
+  highlightingRegex,
+  theme
 }) => {
-  const tableEntries = getTableEntries(
+  const tableEntries = getTableEntries({
     classes,
     subProjects,
     location,
@@ -194,11 +221,21 @@ const SubProjectTable = ({
     showEditDialog,
     showSubProjectPermissions,
     showSubProjectAdditionalData,
-    isSubProjectAdditionalDataShown
-  );
+    highlightingRegex,
+    theme,
+    storeSubSearchTerm,
+    storeSubSearchBarDisplayed
+  });
   return (
     <Card>
       <CardHeader title={strings.common.subprojects} />
+      <SubProjectSearch
+        searchBarDisplayed={searchBarDisplayed}
+        searchTerm={searchTerm}
+        searchDisabled={searchDisabled}
+        storeSearchBarDisplayed={storeSubSearchBarDisplayed}
+        storeSearchTerm={storeSubSearchTerm}
+      />
       <Table data-test="ssp-table" className={classes.subprojectTable}>
         <TableHead>
           <TableRow>
@@ -214,4 +251,4 @@ const SubProjectTable = ({
   );
 };
 
-export default withStyles(styles)(SubProjectTable);
+export default withTheme(styles)(withStyles(styles)(SubProjectTable));

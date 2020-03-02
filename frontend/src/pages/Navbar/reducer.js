@@ -12,7 +12,7 @@ import {
   SET_SELECTED_VIEW,
   TOGGLE_SIDEBAR
 } from "./actions";
-import { convertToURLQuery } from "./convertSearchTerm";
+import { convertToURLQuery } from "../../helper";
 
 const defaultState = fromJS({
   showSidebar: false,

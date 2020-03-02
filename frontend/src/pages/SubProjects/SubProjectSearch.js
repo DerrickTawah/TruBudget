@@ -1,6 +1,6 @@
+import Searchbar from "../Navbar/Searchbar";
 import React from "react";
 import { withStyles } from "@material-ui/core";
-import Searchbar from "./Searchbar";
 import strings from "../../localizeStrings";
 
 const styles = {
@@ -16,7 +16,7 @@ const styles = {
   debounceInput: {}
 };
 
-const ProjectSearch = ({
+const SubProjectSearch = ({
   searchBarDisplayed,
   searchDisabled,
   searchTerm,
@@ -25,16 +25,16 @@ const ProjectSearch = ({
 }) => {
   return (
     <Searchbar
-      datatest="project-search"
+      datatest="subproject-search"
       searchBarDisplayed={searchBarDisplayed}
       searchTerm={searchTerm}
       searchDisabled={searchDisabled}
       storeSearchBarDisplayed={storeSearchBarDisplayed}
       storeSearchTerm={storeSearchTerm}
       autoSearch={true}
-      previewText={strings.common.project_searchtext}
+      previewText={strings.common.subproject_searchtext}
     />
   );
 };
 
-export default withStyles(styles)(ProjectSearch);
+export default withStyles(styles)(SubProjectSearch);
