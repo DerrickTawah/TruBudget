@@ -14,7 +14,6 @@ import {
   storeSearchBarDisplayed,
   setIsRoot
 } from "./actions";
-import { storeSubSearchTerm, storeSubSearchBarDisplayed } from "../SubProjects/actions";
 import { logout } from "../Login/actions";
 
 import FlyInNotifications from "../Notifications/FlyInNotifications";
@@ -63,9 +62,7 @@ const mapDispatchToProps = {
   exportData,
   storeSearchTerm,
   storeSearchBarDisplayed,
-  setIsRoot,
-  storeSubSearchBarDisplayed,
-  storeSubSearchTerm
+  setIsRoot
 };
 
 const mapStateToProps = state => {

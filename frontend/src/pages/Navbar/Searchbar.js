@@ -21,7 +21,6 @@ const styles = {
   },
   debounceInput: {}
 };
-
 const Searchbar = ({
   datatest,
   searchBarDisplayed,

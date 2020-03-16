@@ -2,7 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Chip from "@material-ui/core/Chip";
-import { withStyles, withTheme } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -23,7 +23,7 @@ import { canUpdateSubProject, canViewSubProjectDetails, canViewSubProjectPermiss
 import ActionButton from "../Common/ActionButton";
 import SubProjectSearch from "./SubProjectSearch";
 
-const styles = theme => ({
+const styles = {
   subprojectTable: {
     tableLayout: "fixed"
   },
@@ -62,7 +62,7 @@ const styles = theme => ({
   budget: {
     margin: "4px"
   }
-});
+};
 
 const displaySubprojectBudget = budgets => {
   const consolidatedBudgets = budgets.reduce((acc, next) => {
@@ -251,4 +251,4 @@ const SubProjectTable = ({
   );
 };
 
-export default withTheme(styles)(withStyles(styles)(SubProjectTable));
+export default withStyles(styles)(SubProjectTable);

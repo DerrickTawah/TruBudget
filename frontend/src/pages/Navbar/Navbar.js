@@ -43,9 +43,7 @@ const Navbar = ({
   storeSearchTerm,
   searchTerm,
   storeSearchBarDisplayed,
-  searchBarDisplayed,
-  storeSubSearchTerm,
-  storeSubSearchBarDisplayed
+  searchBarDisplayed
 }) => {
   return (
     <div>
@@ -61,8 +59,6 @@ const Navbar = ({
             environment={environment}
             storeSearchBarDisplayed={storeSearchBarDisplayed}
             storeSearchTerm={storeSearchTerm}
-            storeSubSearchTerm={storeSubSearchTerm}
-            storeSubSearchBarDisplayed={storeSubSearchBarDisplayed}
           />
           <RightNavbarNavigation
             organization={organization}

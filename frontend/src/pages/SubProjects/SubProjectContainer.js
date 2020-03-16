@@ -22,7 +22,7 @@ import {
   showSubProjectPermissions,
   storeSubSearchTerm,
   storeSubSearchBarDisplayed,
-  storeSubFilteredProjects,
+  storeFilteredSubProjects,
   storeSubHighlightingRegex,
   storeSubSearchTermArray
 } from "./actions";
@@ -61,7 +61,7 @@ class SubProjectContainer extends Component {
       const filteredSubProjects = event.data ? event.data.filteredProjects : this.props.subProjects;
       const highlightingRegex = event.data.highlightingRegex;
       const searchTerms = event.data.searchTerms;
-      this.props.storeSubFilteredProjects(filteredSubProjects);
+      this.props.storeFilteredSubProjects(filteredSubProjects);
       this.props.storeSubHighlightingRegex(highlightingRegex);
       this.props.storeSubSearchTermArray(searchTerms);
     });
@@ -77,7 +77,7 @@ class SubProjectContainer extends Component {
     }
     // Reset searchbar
     if (!this.props.searchTerm && prevProps.searchTerm) {
-      this.props.storeSubFilteredProjects(this.props.subProjects);
+      this.props.storeFilteredSubProjects(this.props.subProjects);
       this.props.storeSubHighlightingRegex("");
       this.props.storeSubSearchTermArray([]);
     }
@@ -160,7 +160,7 @@ const mapDispatchToProps = dispatch => {
     openAnalyticsDialog: () => dispatch(openAnalyticsDialog()),
     storeSubSearchTerm: subSearchTerm => dispatch(storeSubSearchTerm(subSearchTerm)),
     storeSubSearchBarDisplayed: subSearchBarDisplayed => dispatch(storeSubSearchBarDisplayed(subSearchBarDisplayed)),
-    storeSubFilteredProjects: filteredSubProjects => dispatch(storeSubFilteredProjects(filteredSubProjects)),
+    storeFilteredSubProjects: filteredSubProjects => dispatch(storeFilteredSubProjects(filteredSubProjects)),
     storeSubHighlightingRegex: highlightingRegex => dispatch(storeSubHighlightingRegex(highlightingRegex)),
     storeSubSearchTermArray: searchTerms => dispatch(storeSubSearchTermArray(searchTerms))
   };

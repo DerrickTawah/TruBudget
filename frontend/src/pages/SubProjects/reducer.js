@@ -88,7 +88,7 @@ const defaultState = fromJS({
 export default function detailviewReducer(state = defaultState, action) {
   switch (action.type) {
     case FETCH_ALL_PROJECT_DETAILS_SUCCESS:
-      // While searching, stop updating the project list from new fetched projects
+      // While searching, stop updating the subproject list from new fetched subprojects
       if (state.get("searchTerms").size === 0) {
         state = state.set("filteredSubProjects", action.subprojects);
       }

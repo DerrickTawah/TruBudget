@@ -328,7 +328,7 @@ export function storeSubSearchBarDisplayed(searchBarDisplayed) {
     searchBarDisplayed
   };
 }
-export function storeSubFilteredProjects(filteredSubProjects) {
+export function storeFilteredSubProjects(filteredSubProjects) {
   return {
     type: SUB_STORE_FILTERED_PROJECTS,
     filteredSubProjects

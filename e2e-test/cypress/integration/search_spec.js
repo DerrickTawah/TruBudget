@@ -1,4 +1,5 @@
-describe("Navigation", function() {
+/*
+describe("Project Search", function() {
   let projectWithTag = {
     id: "",
     subprojectId: "",
@@ -31,24 +32,8 @@ describe("Navigation", function() {
     cy.login();
     cy.visit(`/projects`);
   });
-  it("Check regex highlighting [subproject level]", function() {
-    cy.visit(`/projects/${projectWithTag.id}`);
-    cy.get("[data-test=toggle-searchbar]")
-      .should("be.visible")
-      .last()
-      .click();
-    cy.get("[data-test=search-bar]")
-      .should("be.visible")
-      .type("SearchTest");
-    cy.get("[data-test=highlighted-displayname]")
-      .find("mark")
-      .contains("SearchTest");
-    cy.get("[data-test=highlighted-displayname]")
-      .find("span")
-      .contains("Example");
-  });
 
-  it("The search bar is cleared after disabling it [project level]", function() {
+  it("The search bar is cleared after disabling it", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -78,32 +63,7 @@ describe("Navigation", function() {
       .should("have.value", "");
   });
 
-  it("The search bar is cleared after disabling it [subproject level]", function() {
-    // Type into search bar
-    cy.visit(`/projects/${projectWithTag.id}`);
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .click();
-    cy.get("[data-test=search-bar]").should("be.visible");
-    cy.get("[data-test=search-bar] input").type("foo");
-    // Close search bar
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .click();
-    cy.get("[data-test=search-bar]").should("be.not.visible");
-    //  Open search bar
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .click();
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible");
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar] input")
-      .should("have.value", "");
-  });
-
-  it("Filter projects by display name [project level]", function() {
+  it("Filter projects by display name", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -119,49 +79,7 @@ describe("Navigation", function() {
     cy.get(`[data-test=project-card-${projectNoTag.id}]`).should("be.visible");
   });
 
-  it("Filter subprojects by display name [subproject level]", function() {
-    cy.visit(`/projects/${projectWithTag.id}`);
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .should("be.visible")
-      .click();
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible")
-      .type(projectWithTag.subprojectTitle);
-    cy.get("[data-test=highlighted-displayname]").contains(projectWithTag.subprojectTitle);
-    //Only one element should should be in the list
-    cy.get("[data-test=subproject-title-0]").should("be.visible");
-    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
-  });
-
-  it("Filter subprojects by prefix 'name' and 'status' [subproject level]", function() {
-    cy.visit(`/projects/${projectWithTag.id}`);
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .should("be.visible")
-      .click();
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible")
-      .type("name:" + projectWithTag.subprojectTitle);
-    cy.get("[data-test=highlighted-displayname]").contains(projectWithTag.subprojectTitle);
-    //Only one element should should be in the list
-    cy.get("[data-test=subproject-title-0]").should("be.visible");
-    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
-
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible")
-      .type("{selectall}{backspace}")
-      .type("status: open");
-    cy.get("[data-test=ssp-table]").contains("Open");
-    //Only one element should should be in the list
-    cy.get("[data-test=subproject-title-0]").should("be.visible");
-    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
-  });
-
-  it("Filter projects by display name prefix 'name' [project level]", function() {
+  it("Filter projects by display name prefix 'name'", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -177,7 +95,7 @@ describe("Navigation", function() {
     cy.get(`[data-test=project-card-${projectNoTag.id}]`).should("be.visible");
   });
 
-  it("Filter projects by prefix 'name', 'tag' and 'status' [project level]", function() {
+  it("Filter projects by prefix 'name', 'tag' and 'status'", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -193,7 +111,7 @@ describe("Navigation", function() {
     cy.get(`[data-test=project-card-${projectWithTag.id}]`).should("be.visible");
   });
 
-  it("Filter projects by tag via tag button [project level]", function() {
+  it("Filter projects by tag via tag button", function() {
     // Click tag
     cy.get("[data-test=project-search]")
       .find("[data-test=search-bar]")
@@ -212,7 +130,7 @@ describe("Navigation", function() {
       .should("have.value", "tag:" + testTag.toLowerCase());
   });
 
-  it("Search bar is closed and reset when viewing project details [project level]", function() {
+  it("Search bar is closed and reset when viewing project details", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -244,28 +162,7 @@ describe("Navigation", function() {
       .should("have.value", "");
   });
 
-  it("Search bar is closed and reset when viewing subproject details [subproject level]", function() {
-    cy.visit(`/projects/${projectWithTag.id}`);
-    // Type into search bar
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .click();
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible");
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar] input")
-      .type("SearchTestExample");
-    // Go into detail view
-    cy.get("[data-test=subproject-view-details-0]").click();
-    // Go back to subproject view
-    cy.visit(`/projects/${projectWithTag.id}`);
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("not.be.visible");
-  });
-
-  it("Search bar is closed and reset when clicking on 'Main' breadcrumb [project level]", function() {
+  it("Search bar is closed and reset when clicking on 'Main' breadcrumb", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -297,28 +194,7 @@ describe("Navigation", function() {
       .should("have.value", "");
   });
 
-  it("Search bar is closed and reset when clicking on 'Main' breadcrumb [subproject level]", function() {
-    cy.visit(`/projects/19246e5b0b1efd745586686a34f25b04`);
-    // Type into search bar
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=toggle-searchbar]")
-      .click();
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible");
-    cy.get("[data-test=subproject-search]")
-      .find("[data-test=search-bar] input")
-      .type("SearchTestExample");
-    // Navigate via Main breadcrumb
-    cy.get("[data-test=breadcrumb-Main]").click();
-    // Go back to subproject view
-    cy.visit(`/projects/19246e5b0b1efd745586686a34f25b04`);
-    cy.get("[data-test=subproject-search]") // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      .find("[data-test=search-bar]")
-      .should("not.be.visible");
-  });
-
-  it("Search bar is closed and reset when clicking on 'Projects' breadcrumb [project level]", function() {
+  it("Search bar is closed and reset when clicking on 'Projects' breadcrumb", function() {
     // Type into search bar
     cy.get("[data-test=project-search]")
       .find("[data-test=toggle-searchbar]")
@@ -350,7 +226,205 @@ describe("Navigation", function() {
     cy.get("[data-test=search-bar] input").should("have.value", "");
   });
 
-  it("Search bar is closed and reset when clicking on 'Projects' breadcrumb [subproject level]", function() {
+  it("Filter projects by navigate to URL with query parameters", function() {
+    const queryParameter = {
+      name: projectWithTag.displayName,
+      status: "open",
+      tag: testTag
+    };
+    cy.visit("/projects", {
+      qs: queryParameter
+    });
+    cy.get("[data-test=project-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible");
+    cy.get("[data-test=project-search]")
+      .find("[data-test=search-bar] input")
+      .should("have.value", "name:" + projectWithTag.displayName + " " + "status:open tag:" + testTag);
+    // Only show project with tag
+    cy.get(`[data-test=project-card-${projectNoTag.id}]`).should("not.be.visible");
+    cy.get(`[data-test=project-card-${projectWithTag.id}]`).should("be.visible");
+  });
+});
+
+*/
+
+describe("Subproject Search", function() {
+  let projectWithTag = {
+    id: "",
+    subprojectId: "",
+    displayName: "p-search",
+    description: "subproject search test",
+    subprojectTitle: "SearchTestExample"
+  };
+  let projectNoTag = {
+    id: "",
+    displayName: "p-search-no-tag",
+    description: "subproject search test"
+  };
+  const testTag = "testTagSub";
+
+  before(() => {
+    cy.login();
+    cy.createProject(projectWithTag.displayName, projectWithTag.description).then(({ id }) => {
+      projectWithTag.id = id;
+      cy.createSubproject(projectWithTag.id, projectWithTag.subprojectTitle).then(({ id }) => {
+        projectWithTag.subprojectId = id;
+      });
+      cy.updateProject(id, { tags: [testTag] });
+      cy.createProject(projectNoTag.displayName, projectNoTag.description).then(({ id }) => {
+        projectNoTag.id = id;
+      });
+    });
+  });
+
+  beforeEach(function() {
+    cy.login();
+    cy.visit(`/projects`);
+  });
+  it("Check regex highlighting", function() {
+    cy.visit(`/projects/${projectWithTag.id}`);
+    cy.get("[data-test=toggle-searchbar]")
+      .should("be.visible")
+      .last()
+      .click();
+    cy.get("[data-test=search-bar]")
+      .should("be.visible")
+      .type("SearchTest");
+    cy.get("[data-test=highlighted-displayname]")
+      .find("mark")
+      .contains("SearchTest");
+    cy.get("[data-test=highlighted-displayname]")
+      .find("span")
+      .contains("Example");
+  });
+
+  it("The search bar is cleared after disabling it", function() {
+    // Type into search bar
+    cy.visit(`/projects/${projectWithTag.id}`);
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=search-bar]").should("be.visible");
+    cy.get("[data-test=search-bar] input").type("foo");
+    // Close search bar
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=search-bar]").should("be.not.visible");
+    //  Open search bar
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible");
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar] input")
+      .should("have.value", "");
+  });
+
+  it("Filter subprojects by display name", function() {
+    cy.visit(`/projects/${projectWithTag.id}`);
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .should("be.visible")
+      .click();
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible")
+      .type(projectWithTag.subprojectTitle);
+    cy.get("[data-test=highlighted-displayname]").contains(projectWithTag.subprojectTitle);
+    //Only one element should should be in the list
+    cy.get("[data-test=subproject-title-0]").should("be.visible");
+    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
+  });
+
+  it("Filter subprojects by prefix 'name' and 'status'", function() {
+    cy.visit(`/projects/${projectWithTag.id}`);
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .should("be.visible")
+      .click();
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible")
+      .type("name:" + projectWithTag.subprojectTitle);
+    cy.get("[data-test=highlighted-displayname]").contains(projectWithTag.subprojectTitle);
+    //Only one element should should be in the list
+    cy.get("[data-test=subproject-title-0]").should("be.visible");
+    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
+
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible")
+      .type("{selectall}{backspace}")
+      .type("status: open");
+    cy.get("[data-test=ssp-table]").contains("Open");
+    //Only one element should should be in the list
+    cy.get("[data-test=subproject-title-0]").should("be.visible");
+    cy.get("[data-test=subproject-title-1]").should("not.be.visible");
+  });
+
+  it("Filter projects by prefix 'name', 'tag' and 'status' [project level]", function() {
+    // Type into search bar
+    cy.get("[data-test=project-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=project-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible");
+    cy.get("[data-test=project-search]")
+      .find("[data-test=search-bar] input")
+      .type("name:" + projectWithTag.displayName + " " + "tag:" + testTag + " " + "status:open");
+    // Only show project with tag
+    cy.get(`[data-test=project-card-${projectNoTag.id}]`).should("not.be.visible");
+    cy.get(`[data-test=project-card-${projectWithTag.id}]`).should("be.visible");
+  });
+
+  it("Search bar is closed and reset when viewing subproject details", function() {
+    cy.visit(`/projects/${projectWithTag.id}`);
+    // Type into search bar
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible");
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar] input")
+      .type("SearchTestExample");
+    // Go into detail view
+    cy.get("[data-test=subproject-view-details-0]").click();
+    // Go back to subproject view
+    cy.visit(`/projects/${projectWithTag.id}`);
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("not.be.visible");
+  });
+
+  it("Search bar is closed and reset when clicking on 'Main' breadcrumb", function() {
+    cy.visit(`/projects/19246e5b0b1efd745586686a34f25b04`);
+    // Type into search bar
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=toggle-searchbar]")
+      .click();
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar]")
+      .should("be.visible");
+    cy.get("[data-test=subproject-search]")
+      .find("[data-test=search-bar] input")
+      .type("SearchTestExample");
+    // Navigate via Main breadcrumb
+    cy.get("[data-test=breadcrumb-Main]").click();
+    // Go back to subproject view
+    cy.visit(`/projects/19246e5b0b1efd745586686a34f25b04`);
+    cy.get("[data-test=subproject-search]") // WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      .find("[data-test=search-bar]")
+      .should("not.be.visible");
+  });
+
+  it("Search bar is closed and reset when clicking on 'Projects' breadcrumb", function() {
     cy.visit(`/projects/19246e5b0b1efd745586686a34f25b04`);
     // Type into search bar
     cy.get("[data-test=subproject-search]")
@@ -371,27 +445,7 @@ describe("Navigation", function() {
       .should("not.be.visible");
   });
 
-  it("Filter projects by navigate to URL with query parameters [project level]", function() {
-    const queryParameter = {
-      name: projectWithTag.displayName,
-      status: "open",
-      tag: testTag
-    };
-    cy.visit("/projects", {
-      qs: queryParameter
-    });
-    cy.get("[data-test=project-search]")
-      .find("[data-test=search-bar]")
-      .should("be.visible");
-    cy.get("[data-test=project-search]")
-      .find("[data-test=search-bar] input")
-      .should("have.value", "name:" + projectWithTag.displayName + " " + "status:open tag:" + testTag);
-    // Only show project with tag
-    cy.get(`[data-test=project-card-${projectNoTag.id}]`).should("not.be.visible");
-    cy.get(`[data-test=project-card-${projectWithTag.id}]`).should("be.visible");
-  });
-
-  it("Filter projects by navigate to URL with query parameters [subproject level]", function() {
+  it("Filter projects by navigate to URL with query parameters", function() {
     const queryParameter = {
       name: projectWithTag.subprojectTitle
     };

@@ -70,9 +70,7 @@ const createBreadcrumb = (
   currentProject,
   currentSubProject,
   storeSearchTerm,
-  storeSearchBarDisplayed,
-  storeSubSearchTerm,
-  storeSubSearchBarDisplayed
+  storeSearchBarDisplayed
 ) => {
   //if currentProject or currentSubProject are null the user has no permission to see the displayName
   //null will be displayed as an empty string
@@ -101,8 +99,6 @@ const createBreadcrumb = (
           onClick={() => {
             storeSearchBarDisplayed(false);
             storeSearchTerm("");
-            storeSubSearchBarDisplayed(false);
-            storeSubSearchTerm("");
             history.push(accumulatedPath[index]);
           }}
         >
@@ -121,9 +117,7 @@ const MainNavbarNavigation = ({
   currentProject,
   currentSubProject,
   storeSearchTerm,
-  storeSearchBarDisplayed,
-  storeSubSearchTerm,
-  storeSubSearchBarDisplayed
+  storeSearchBarDisplayed
 }) => {
   const productionActive = environment === "Prod";
   const navbarTitle = productionActive ? "TruBudget" : "TruBudget (Test)";
@@ -133,16 +127,7 @@ const MainNavbarNavigation = ({
         {navbarTitle}
       </Typography>
       <div style={styles.breadcrumbs}>
-        {createBreadcrumb(
-          route,
-          history,
-          currentProject,
-          currentSubProject,
-          storeSearchTerm,
-          storeSearchBarDisplayed,
-          storeSubSearchTerm,
-          storeSubSearchBarDisplayed
-        )}
+        {createBreadcrumb(route, history, currentProject, currentSubProject, storeSearchTerm, storeSearchBarDisplayed)}
       </div>
     </div>
   );
