@@ -2,7 +2,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Chip from "@material-ui/core/Chip";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -251,4 +251,4 @@ const SubProjectTable = ({
   );
 };
 
-export default withStyles(styles)(SubProjectTable);
+export default withTheme(styles)(withStyles(styles)(SubProjectTable));
