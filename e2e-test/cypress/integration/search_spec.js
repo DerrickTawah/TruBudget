@@ -1,4 +1,3 @@
-/*
 describe("Project Search", function() {
   let projectWithTag = {
     id: "",
@@ -246,8 +245,6 @@ describe("Project Search", function() {
     cy.get(`[data-test=project-card-${projectWithTag.id}]`).should("be.visible");
   });
 });
-
-*/
 
 describe("Subproject Search", function() {
   let projectWithTag = {
