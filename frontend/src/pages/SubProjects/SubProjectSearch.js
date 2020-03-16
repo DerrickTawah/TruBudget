@@ -11,7 +11,7 @@ const SubProjectSearch = ({
 }) => {
   return (
     <Searchbar
-      datatest="subproject-search"
+      data-test="subproject-search"
       searchBarDisplayed={searchBarDisplayed}
       searchTerm={searchTerm}
       searchDisabled={searchDisabled}

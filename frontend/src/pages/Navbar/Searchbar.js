@@ -22,7 +22,6 @@ const styles = {
   debounceInput: {}
 };
 const Searchbar = ({
-  datatest,
   searchBarDisplayed,
   searchDisabled,
   searchTerm,
@@ -32,11 +31,11 @@ const Searchbar = ({
   previewText
 }) => {
   return (
-    <div style={{ display: "flex" }} data-test={datatest}>
+    <div style={{ display: "flex" }} data-test="search-bar">
       {searchBarDisplayed && !searchDisabled ? (
         <Paper style={styles.searchField}>
           <form onSubmit={e => e.preventDefault()} style={{ width: "90%" }}>
-            <FormControl style={{ width: "97%", paddingLeft: "5px" }} data-test="search-bar">
+            <FormControl style={{ width: "97%", paddingLeft: "5px" }} data-test="search-input">
               <Input
                 input={searchTerm}
                 defaultValue={searchTerm}
